@@ -12,8 +12,8 @@ namespace GPT.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        //GPT 2
+        public ActionResult Index()
         {
             return View();
         }
