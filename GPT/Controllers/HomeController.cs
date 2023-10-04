@@ -1,6 +1,8 @@
 ﻿using GPT.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using OpenAI_API;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace GPT.Controllers
 {
@@ -27,6 +29,16 @@ namespace GPT.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public ActionResult GPT( string x)
+        {
+            var apiKey = "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";
+            var openai = new OpenAIAPI(apiKey);
+            var chat = openai.Chat.CreateConversation();
+            chat.AppendUserInput(x);
+
+            return View();
         }
     }
 }
