@@ -7,13 +7,13 @@ namespace GPT.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        //GPT
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        //GPT 2
+        public ActionResult Index()
         {
             return View();
         }
