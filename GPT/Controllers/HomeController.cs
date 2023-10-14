@@ -33,11 +33,21 @@ namespace GPT.Controllers
 
         public ActionResult ChatGPT(Question question)
         {
-            var apiKey = "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";
+            var apiKey = "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";
             var openai = new OpenAIAPI(apiKey);
             var chat = openai.Chat.CreateConversation();
-            chat.AppendUserInput(question.message);
-            
+
+            //chat.AppendSystemMessage("You are a grade 7 teacher explaining the animal kingdom to your students");
+            //chat.AppendUserInput("What is a dog?");
+
+            //chat.AppendSystemMessage("You are university lecturer teaching computer science to your 3rd year students");
+            //chat.AppendUserInput("Write me a simple program that allows me to add two numbers together in python");
+
+
+            chat.AppendSystemMessage("You are university lecturer teaching computer science to your 3rd year students");
+            chat.AppendUserInput("Write me a simple program that allows me to add two numbers together in python");
+
+            string res = chat.GetResponseFromChatbotAsync().Result;
 
             //Button gets form text
 
@@ -51,7 +61,7 @@ namespace GPT.Controllers
 
             string message = "Hello from the controller \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             
-            return Content(question.response);
+            return Content(res);
         }
     }
 }
