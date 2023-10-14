@@ -3,6 +3,65 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Chat GPT</h1>
+    <p>Ask me anything</p>
 </div>
+
+
+<div class="mb-3">
+    <label style="font-size:30px; font-weight:500;" for="exampleFormControlTextarea1" class="form-label">Input message</label>
+    <textarea id="textArea" class="form-control" rows="8"></textarea>
+
+    
+
+    <div style="float:right; margin-top:10px;">
+        <button id="generateButton" onclick="generateGptResponse()" type="button" class="btn btn-primary">Generate response</button>
+        <button onclick="clear()" type="button" class="btn btn-outline-success">Clear</button>
+    </div>
+</div>
+
+
+
+
+<div style="margin-top:150px;">
+    <h1>Output</h1>
+    <p id="outputArea">Response:</p>
+</div>
+
+
+<script>
+
+    function generateGptResponse() {
+
+        // client side call a controller function
+            $.ajax({
+                url: "@Url.Action("ChatGPT", "Home")",
+                // Return the res of the function
+                success: function (result) {
+
+                    // display the res on the view
+                document.getElementById("outputArea").innerHTML = result;
+
+                    // alert("Hello! I am an alert box!!");
+
+                },
+
+                //Display any errors
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+
+
+
+
+
+    }
+
+
+    function clear() {
+
+        document.getElementById("outputArea").innerHTML = "";
+        // document.getElementById("textArea").value = "";
+    }
+</script>
