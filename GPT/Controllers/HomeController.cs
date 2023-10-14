@@ -33,7 +33,8 @@ namespace GPT.Controllers
 
         public ActionResult ChatGPT(Question question)
         {
-            var apiKey = "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";
+            //Create connection to OpenAi api via secret key
+            var apiKey = "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";
             var openai = new OpenAIAPI(apiKey);
             var chat = openai.Chat.CreateConversation();
 
@@ -44,22 +45,24 @@ namespace GPT.Controllers
             //chat.AppendUserInput("Write me a simple program that allows me to add two numbers together in python");
 
 
-            chat.AppendSystemMessage("You are university lecturer teaching computer science to your 3rd year students");
-            chat.AppendUserInput("Write me a simple program that allows me to add two numbers together in python");
+            //controller sends text to open ai api
+            string context = question.context = "You are a dog who only barks";
+            string message = question.message = "Say hello to me";
 
-            string res = chat.GetResponseFromChatbotAsync().Result;
 
-            //Button gets form text
 
             //returns text to controller
+            chat.AppendSystemMessage(context);
+            chat.AppendUserInput(message);
 
-            //controller sends text to open ai api
+
 
             //open ai api returns res
+            string res = chat.GetResponseFromChatbotAsync().Result;
 
 
 
-            string message = "Hello from the controller \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            //string message = "Hello from the controller \n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             
             return Content(res);
         }
