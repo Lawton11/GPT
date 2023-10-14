@@ -1,4 +1,5 @@
-﻿@{
+﻿@model GPT.Models.Question
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,19 +8,28 @@
     <p>Ask me anything</p>
 </div>
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label style="font-size:30px; font-weight:500;" for="exampleFormControlTextarea1" class="form-label">Input message</label>
+        @* <textarea id="textArea" class="form-control" rows="8"></textarea> *@
 
-<div class="mb-3">
-    <label style="font-size:30px; font-weight:500;" for="exampleFormControlTextarea1" class="form-label">Input message</label>
-    <textarea id="textArea" class="form-control" rows="8"></textarea>
+        <h6>Message</h6>
+        @Html.EditorFor(model => model.message, new { htmlAttributes = new { @class = "form-control", @style="margin-bottom:30px; margin-top:30px;" } })
 
-    
 
-    <div style="float:right; margin-top:10px;">
-        <button id="generateButton" onclick="generateGptResponse()" type="button" class="btn btn-primary">Generate response</button>
-        <button onclick="clear()" type="button" class="btn btn-outline-success">Clear</button>
+        <h6>Context</h6>
+        @Html.EditorFor(model => model.context, new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+        <div style="float:right; margin-top:10px;">
+            <button id="generateButton" onclick="generateGptResponse()" type="button" class="btn btn-primary">Generate response</button>
+            <button onclick="clear()" type="button" class="btn btn-outline-success">Clear</button>
+        </div>
     </div>
-</div>
-
+}
 
 
 
@@ -34,23 +44,23 @@
     function generateGptResponse() {
 
         // client side call a controller function
-            $.ajax({
-                url: "@Url.Action("ChatGPT", "Home")",
-                // Return the res of the function
-                success: function (result) {
+        $.ajax({
+            url: "@Url.Action("ChatGPT", "Home")",
+            // Return the res of the function
+            success: function (result) {
 
-                    // display the res on the view
+                // display the res on the view
                 document.getElementById("outputArea").innerHTML = result;
 
-                    // alert("Hello! I am an alert box!!");
+                // alert("Hello! I am an alert box!!");
 
-                },
+            },
 
-                //Display any errors
-                error: function (xhr, status, error) {
-                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-                }
-            });
+            //Display any errors
+            error: function (xhr, status, error) {
+                alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
+        });
 
 
 
