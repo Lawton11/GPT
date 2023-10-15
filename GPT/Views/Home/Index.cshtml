@@ -8,28 +8,28 @@
     <p>Ask me anything</p>
 </div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ChatGPT", "Home", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    <div class="mb-3">
-        <label style="font-size:30px; font-weight:500;" for="exampleFormControlTextarea1" class="form-label">Input message</label>
-        @* <textarea id="textArea" class="form-control" rows="8"></textarea> *@
-
-        <h6>Message</h6>
-        @Html.EditorFor(model => model.message, new { htmlAttributes = new { @class = "form-control", @style="margin-bottom:30px; margin-top:30px;" } })
 
 
-        <h6>Context</h6>
-        @Html.EditorFor(model => model.context, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.message)
+        @Html.TextBoxFor(m => m.message, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.message)
 
 
 
         <div style="float:right; margin-top:10px;">
-            <button id="generateButton" onclick="generateGptResponse()" type="button" class="btn btn-primary">Generate response</button>
-            <button onclick="clear()" type="button" class="btn btn-outline-success">Clear</button>
+            <button id="generateButton" type="submit" class="btn btn-primary">Generate response</button>
+            <button type="button" class="btn btn-outline-success">Clear</button>
         </div>
     </div>
 }
+
+
+
+
 
 
 
@@ -46,14 +46,12 @@
         // client side call a controller function
         $.ajax({
             url: "@Url.Action("ChatGPT", "Home")",
+            data: { "name": $("#textArea").val() },
             // Return the res of the function
             success: function (result) {
 
                 // display the res on the view
-                document.getElementById("outputArea").innerHTML = result;
-
-                // alert("Hello! I am an alert box!!");
-
+                document.getElementById("outputArea").innerHTML = result.response;
             },
 
             //Display any errors
